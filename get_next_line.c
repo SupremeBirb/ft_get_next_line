@@ -34,11 +34,18 @@ int				get_next_line(const int fd, char **line)
 	return ((*line = *str[fd]++) ? 1 : 0);
 }
 
+int read_line()
+
 int	get_next_line(const int fd, char **line)
 {
 	static char *str[FD_LIMIT];
 	int size;
-	
+	char buff[BUFF_SIZE + 1];
+	char *tmp;
+
+	if (fd < 0 || !line || fd > FD_LIMIT || read(fd, buff, 0) == -1)
+		return (-1);
+	return (read_line(&str[fd], fd, line));
 }
 
 // int			main(int ac, char **av)
