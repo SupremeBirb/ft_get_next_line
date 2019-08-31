@@ -6,7 +6,7 @@
 /*   By: lelee <lelee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 12:40:07 by lelee             #+#    #+#             */
-/*   Updated: 2019/08/31 03:24:10 by lelee            ###   ########.fr       */
+/*   Updated: 2019/08/31 03:27:11 by lelee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,16 @@ int	get_next_line(const int fd, char **line)
 	
 	if (fd < 0 || !line || fd > FD_LIMIT || read(fd, 0, 0) == -1)
 		return (-1);
-	while((ret = read(fd, buff, BUFF_SIZE)) > 0)
+	while((ret = read(fd, buf, BUFF_SIZE)) > 0 && !ft_strchr(buf, '\n'))
 	{
 		if (!str[fd])
 			str[fd] = ft_strnew(1);
-		buff[ret] = '\0';
-		tmp = ft_strjoin(str[fd], buff);
+		buf[ret] = '\0';
+		tmp = ft_strjoin(str[fd], buf);
 		free(str[fd]);
 		str[fd] = tmp;
-		if (ft_strchr(buff, '\n'))
-			break;
+		// if (ft_strchr(buf, '\n'))
+		// 	break;
 	}
 	free(tmp);
 	if (ret < 0)
