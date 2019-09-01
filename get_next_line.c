@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lelee <lelee@student.42.fr>                +#+  +:+       +#+        */
+/*   By: portablebirb <portablebirb@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 12:40:07 by lelee             #+#    #+#             */
-/*   Updated: 2019/08/31 03:27:11 by lelee            ###   ########.fr       */
+/*   Updated: 2019/09/01 04:30:08 by portablebir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,20 @@ int ft_line(char **str, int fd, char **line, int ret)
 		len++;
 	if (str[fd][len] == '\n')
 	{
-		
+		*line = ft_strsub(str[fd], 0, len);
+		tmp = ft_strdup(str[fd] + len + 1);
+		free(str[fd]);
+		str[fd]= tmp;
+		if (str[fd][0] == '\0')
+			ft_strdel(&str[fd]);
+		free(str[fd]);
 	}
 	else if (str[fd][len] == '\0')
 	{
-		
+		if (ret == BUFF_SIZE)
+			return (get_next_line(fd, line));
+		*line = ft_strdup(str[fd]);
+		ft_strdel(&str[fd]);
 	}
 	return (1);
 }
@@ -73,21 +82,20 @@ int	get_next_line(const int fd, char **line)
 	
 	if (fd < 0 || !line || fd > FD_LIMIT || read(fd, 0, 0) == -1)
 		return (-1);
-	while((ret = read(fd, buf, BUFF_SIZE)) > 0 && !ft_strchr(buf, '\n'))
+	while((ret = read(fd, buf, BUFF_SIZE)) > 0)
 	{
+		buf[ret] = '\0';
 		if (!str[fd])
 			str[fd] = ft_strnew(1);
-		buf[ret] = '\0';
 		tmp = ft_strjoin(str[fd], buf);
 		free(str[fd]);
 		str[fd] = tmp;
-		// if (ft_strchr(buf, '\n'))
-		// 	break;
+		if (ft_strchr(buf, '\n'))
+			break;
 	}
-	free(tmp);
 	if (ret < 0)
 		return (-1);
-	else if ((ret == 0 && !str[fd]) || str[fd][0] == '\0')
+	else if ((ret == 0 && str[fd] == NULL))
 		return (0);
 	return (ft_line(str, fd, line, ret));
 }
