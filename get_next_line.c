@@ -98,22 +98,26 @@ int	get_next_line(const int fd, char **line)
 	return (ft_line(str, fd, line, ret));
 }
 
-int			main(int ac, char **av)
-{
-	int		fd;
-	char	*str;
-	int		tst;
+// int			main(int ac, char **av)
+// {
+// 	int		fd;
+// 	char	*str;
+// 	int		tst;
 
-	if (ac != 2)
-	{
-		ft_putendl("Usage: ./gnl filename");
-		return (0);
-	}
-	fd = open(av[1], O_RDONLY);
-	while ((tst = get_next_line(fd, &str)) > 0)
-		printf("String: %s\n", str);
-	return (0);
-}
+// 	if (ac != 2)
+// 	{
+// 		ft_putendl("Usage: ./gnl filename");
+// 		return (0);
+// 	}
+// 	fd = open(av[1], O_RDONLY);
+// 	while ((tst = get_next_line(fd, &str)) > 0)
+// 	{
+// 		printf("String: %s\n", str);
+// 		free(str);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
 
 /*
 ** 	read:
