@@ -6,7 +6,7 @@
 /*   By: portablebirb <portablebirb@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 12:40:07 by lelee             #+#    #+#             */
-/*   Updated: 2019/09/01 04:30:08 by portablebir      ###   ########.fr       */
+/*   Updated: 2019/09/02 02:56:32 by portablebir      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,12 @@ int ft_line(char **str, int fd, char **line, int ret)
 		tmp = ft_strdup(str[fd] + len + 1);
 		free(str[fd]);
 		str[fd]= tmp;
+		ft_strdel((void*)tmp);
 		if (str[fd][0] == '\0')
+		{
 			ft_strdel(&str[fd]);
-		free(str[fd]);
+			ft_strdel((void*)tmp);		
+		}
 	}
 	else if (str[fd][len] == '\0')
 	{
@@ -79,7 +82,6 @@ int	get_next_line(const int fd, char **line)
 {	
 	GNL_MACRO;
 	static char *str[FD_LIMIT];
-	
 	if (fd < 0 || !line || fd > FD_LIMIT || read(fd, 0, 0) == -1)
 		return (-1);
 	while((ret = read(fd, buf, BUFF_SIZE)) > 0)
