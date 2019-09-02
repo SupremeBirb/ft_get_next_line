@@ -6,7 +6,7 @@
 /*   By: lelee <lelee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 12:39:53 by lelee             #+#    #+#             */
-/*   Updated: 2019/08/31 03:26:39 by lelee            ###   ########.fr       */
+/*   Updated: 2019/09/02 04:09:33 by lelee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FT_GET_NEXT_LINE_H
 # define BUFF_SIZE 32
 # define FD_LIMIT 8192
-# define GNL_MACRO 	char buf[BUFF_SIZE + 1]; int ret; char *tmp; char *ch; 
+# define GNL_MACRO 	char buf[BUFF_SIZE + 1]; int ret; char *tmp;
 
 # include "libft/libft.h"
 # include <stdlib.h>

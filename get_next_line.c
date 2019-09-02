@@ -3,54 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: portablebirb <portablebirb@student.42.f    +#+  +:+       +#+        */
+/*   By: lelee <lelee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 12:40:07 by lelee             #+#    #+#             */
-/*   Updated: 2019/09/02 04:00:07 by portablebir      ###   ########.fr       */
+/*   Updated: 2019/09/02 04:33:25 by lelee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
-// int				get_next_line(const int fd, char **line)
-// {
-// 	static char **str[FD_LIMIT];
-// 	int			size;
-// 	char		buf[BUFF_SIZE + 1];
-// 	char		*temp;
-
-// 	// ft_memset(buf, 0, BUFF_SIZE);
-// 	if (fd < 0 || !line || fd > FD_LIMIT - 1 || read(fd, buf, 0) == -1)
-// 		return (-1);
-// 	temp = ft_strnew(0);
-// 	while ((size = read(fd, buf, BUFF_SIZE)) > 0) //  Reading whole file
-// 	{
-// 		buf[size] = '\0';
-// 		temp = ft_strjoin(temp, buf);
-// 	}
-// 	if (!str[fd])
-// 		str[fd] = ft_strsplit(temp, '\n');
-// 	return ((*line = *str[fd]++) ? 1 : 0);
-// }
-
-// char	*ft_strjoinf(char const *s1, char const *s2)
-// {
-// 	char *str;
-
-// 	if (!s1 || !s2)
-// 		return (NULL);
-// 	if (!(str = ft_strnew(ft_strlen(s1) + ft_strlen(s2)))) 
-// 		return (NULL);
-// 	ft_strcat(str, s1);
-// 	ft_strcat(str, s2);
-// 	return (str);
-// }
-
-int ft_line(char **str, int fd, char **line, int ret)
+int			ft_line(char **str, int fd, char **line, int ret)
 {
-	char *tmp;
-	int len;
+	char	*tmp;
+	int		len;
 
 	len = 0;
 	while (str[fd][len] != '\n' && str[fd][len] != '\0')
@@ -60,9 +25,9 @@ int ft_line(char **str, int fd, char **line, int ret)
 		*line = ft_strsub(str[fd], 0, len);
 		tmp = ft_strdup(str[fd] + len + 1);
 		free(str[fd]);
-		str[fd]= tmp;
+		str[fd] = tmp;
 		if (str[fd][0] == '\0')
-			ft_strdel(&str[fd]);	
+			ft_strdel(&str[fd]);
 	}
 	else if (str[fd][len] == '\0')
 	{
@@ -74,13 +39,14 @@ int ft_line(char **str, int fd, char **line, int ret)
 	return (1);
 }
 
-int	get_next_line(const int fd, char **line)
-{	
-	GNL_MACRO;
+int			get_next_line(const int fd, char **line)
+{
 	static char *str[FD_LIMIT];
+
+	GNL_MACRO;
 	if (fd < 0 || !line || fd > FD_LIMIT || read(fd, 0, 0) == -1)
 		return (-1);
-	while((ret = read(fd, buf, BUFF_SIZE)) > 0)
+	while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
 	{
 		buf[ret] = '\0';
 		if (!str[fd])
@@ -89,7 +55,7 @@ int	get_next_line(const int fd, char **line)
 		free(str[fd]);
 		str[fd] = tmp;
 		if (ft_strchr(buf, '\n'))
-			break;
+			break ;
 	}
 	if (ret < 0)
 		return (-1);
@@ -98,26 +64,27 @@ int	get_next_line(const int fd, char **line)
 	return (ft_line(str, fd, line, ret));
 }
 
-// int			main(int ac, char **av)
-// {
-// 	int		fd;
-// 	char	*str;
-// 	int		tst;
-
-// 	if (ac != 2)
-// 	{
-// 		ft_putendl("Usage: ./gnl filename");
-// 		return (0);
-// 	}
-// 	fd = open(av[1], O_RDONLY);
-// 	while ((tst = get_next_line(fd, &str)) > 0)
-// 	{
-// 		printf("String: %s\n", str);
-// 		free(str);
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
+/*
+** int			main(int ac, char **av)
+** {
+** 	int		fd;
+** 	char	*str;
+** 	int		tst**
+** 	if (ac != 2)
+** 	{
+** 		ft_putendl("Usage: ./gnl filename");
+** 		return (0);
+** 	}
+** 	fd = open(av[1], O_RDONLY);
+** 	while ((tst = get_next_line(fd, &str)) > 0)
+** 	{
+** 		printf("String: %s\n", str);
+** 		free(str);
+** 	}
+** 	close(fd);
+** 	return (0);
+** }
+*/
 
 /*
 ** 	read:
